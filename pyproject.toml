@@ -1,0 +1,60 @@
+[project]
+name = "TTrans"
+version = "1.0.0"
+description = "Terminal-based translation tool with TUI interface"
+readme = "README.md"
+license = "MIT"
+authors = [{name = "Thierry Cao", email = "thierrycao@example.com"}]
+keywords = ["translation", "translate", "tui", "terminal", "youdao", "google"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Terminals",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "textual>=0.40.0",
+    "rich>=13.0.0",
+    "deep-translator>=1.11.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+]
+build = [
+    "pyinstaller>=6.0.0",
+    "build>=1.0.0",
+    "twine>=5.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/thierrycao/TTrans"
+Documentation = "https://github.com/thierrycao/TTrans#readme"
+Repository = "https://github.com/thierrycao/TTrans"
+Issues = "https://github.com/thierrycao/TTrans/issues"
+
+[project.scripts]
+ttrans = "ttrans:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+python_files = ["test_*.py"]
+addopts = "-v"

@@ -1,0 +1,158 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  # PyPI 发布
+  build-pypi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Upload to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: twine upload dist/*.tar.gz dist/*.whl
+
+  # Linux 构建
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: pyinstaller TTrans.spec
+
+      - name: Rename binary
+        run: mv dist/TTrans dist/TTrans-linux
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTrans-linux
+          path: dist/TTrans-linux
+
+  # macOS 构建
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: pyinstaller TTrans.spec
+
+      - name: Rename binary
+        run: mv dist/TTrans dist/TTrans-macos
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTrans-macos
+          path: dist/TTrans-macos
+
+  # Windows 构建
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: pyinstaller TTrans.spec
+
+      - name: Rename binary
+        run: mv dist/TTrans.exe dist/TTrans-windows.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTrans-windows
+          path: dist/TTrans-windows.exe
+
+  # 发布到 GitHub Releases
+  release:
+    needs: [build-linux, build-macos, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            TTrans-linux/TTrans-linux
+            TTrans-macos/TTrans-macos
+            TTrans-windows/TTrans-windows.exe
+          body: |
+            ## TTrans ${{ github.ref_name }}
+
+            终端翻译工具，支持 Google Translate 和 MyMemory 双引擎。
+
+            ### 下载
+
+            | 平台 | 文件 |
+            |------|------|
+            | Linux | `TTrans-linux` |
+            | macOS | `TTrans-macos` |
+            | Windows | `TTrans-windows.exe` |
+
+            ### 使用
+
+            ```bash
+            # Linux/macOS
+            chmod +x TTrans-*
+            ./TTrans-linux              # 启动 TUI
+            ./TTrans-linux Hello World  # 简洁模式
+
+            # Windows
+            TTrans-windows.exe          # 启动 TUI
+            TTrans-windows.exe Hello    # 简洁模式
+            ```
+
+            ### pip 安装
+
+            ```bash
+            pip install TTrans
+            ttrans              # 启动 TUI
+            ttrans Hello World  # 简洁模式
+            ```

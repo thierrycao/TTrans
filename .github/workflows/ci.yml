@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: python -m py_compile run_tui.py
+
+      - name: Check imports
+        run: |
+          cd src
+          python -c "import ttrans"
+          python -c "from ttrans.main import main"
+          python -c "from ttrans.translator import TranslatorEngine, ENGINES, LANGUAGES"
+          python -c "from ttrans.ui.app import TTransApp"
+
+      - name: Test CLI
+        run: |
+          cd src
+          python -c "from ttrans.main import main; main(['--list'])"
+          python -c "from ttrans.main import main; main(['Hello', '--to', 'zh-CN'])"
+
+      - name: Verify package build
+        run: |
+          pip install build
+          python -m build --wheel
