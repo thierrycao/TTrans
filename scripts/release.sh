@@ -9,7 +9,7 @@ PROJECT_ROOT=$(pwd)
 
 NEW_VERSION=${1:-}
 
-echo "=== TTrans 一键发布 ==="
+echo "=== ITrans 一键发布 ==="
 
 # 获取当前版本
 CURRENT=$(grep 'version = ' pyproject.toml | head -1 | sed 's/version = "//' | sed 's/"//')
@@ -55,7 +55,7 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 echo "创建 tag..."
-git tag -a "v$VERSION" -m "TTrans v$VERSION"
+git tag -a "v$VERSION" -m "ITrans v$VERSION"
 
 # 3. 推送到 GitHub
 echo ""
@@ -71,8 +71,8 @@ echo "  - PyPI 发布"
 echo "  - Linux/macOS/Windows 二进制构建"
 echo "  - GitHub Release 创建"
 echo ""
-echo "查看进度: https://github.com/thierrycao/TTrans/actions"
+echo "查看进度: https://github.com/thierrycao/ITrans/actions"
 echo ""
 echo "发布后:"
-echo "  - PyPI: https://pypi.org/project/TTrans/"
-echo "  - GitHub: https://github.com/thierrycao/TTrans/releases"
+echo "  - PyPI: https://pypi.org/project/ITrans/"
+echo "  - GitHub: https://github.com/thierrycao/ITrans/releases"

@@ -1,4 +1,4 @@
-# src/ttrans/ui/__init__.py
+# src/itrans/ui/__init__.py
 """TUI 用户界面模块
 
 三列浮窗设计，灵感来自现代 AI 应用：
@@ -25,6 +25,6 @@
 
 基于 Textual 框架，终端 UI 的现代选择。
 """
-from .app import TTransFloatApp, TripleColumnScreen
+from .app import ITransFloatApp, TripleColumnScreen
 
-__all__ = ["TTransFloatApp", "TripleColumnScreen"]
+__all__ = ["ITransFloatApp", "TripleColumnScreen"]

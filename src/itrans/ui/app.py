@@ -1,4 +1,4 @@
-"""TTrans 浮窗翻译工具 - 三列精炼设计
+"""ITrans 浮窗翻译工具 - 三列精炼设计
 
 界面布局（50字符宽度，紧凑不占屏）：
 
@@ -351,8 +351,8 @@ class TripleColumnScreen(Screen):
 
 # ==================== 主应用 ====================
 
-class TTransFloatApp(App):
-    """TTrans 浮窗翻译应用"""
+class ITransFloatApp(App):
+    """ITrans 浮窗翻译应用"""
 
     CSS = """
     App {

@@ -8,7 +8,7 @@ set -e
 
 MODE=${1:-test}
 
-echo "=== TTrans PyPI 发布 ==="
+echo "=== ITrans PyPI 发布 ==="
 echo "发布模式: $MODE"
 
 # 进入项目根目录
@@ -75,9 +75,9 @@ echo ""
 echo "✅ 发布完成！"
 echo ""
 if [ "$MODE" == "prod" ]; then
-    echo "安装: pip install TTrans"
-    echo "主页: https://pypi.org/project/TTrans/"
+    echo "安装: pip install ITrans"
+    echo "主页: https://pypi.org/project/ITrans/"
 else
-    echo "测试安装: pip install --index-url https://test.pypi.org/simple/ TTrans"
-    echo "主页: https://test.pypi.org/project/TTrans/"
+    echo "测试安装: pip install --index-url https://test.pypi.org/simple/ ITrans"
+    echo "主页: https://test.pypi.org/project/ITrans/"
 fi

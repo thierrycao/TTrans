@@ -47,15 +47,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build with PyInstaller
-        run: pyinstaller TTrans.spec
+        run: pyinstaller ITrans.spec
 
       - name: Rename binary
-        run: mv dist/TTrans dist/TTrans-linux
+        run: mv dist/ITrans dist/ITrans-linux
 
       - uses: actions/upload-artifact@v4
         with:
-          name: TTrans-linux
-          path: dist/TTrans-linux
+          name: ITrans-linux
+          path: dist/ITrans-linux
 
   # macOS 构建
   build-macos:
@@ -73,15 +73,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build with PyInstaller
-        run: pyinstaller TTrans.spec
+        run: pyinstaller ITrans.spec
 
       - name: Rename binary
-        run: mv dist/TTrans dist/TTrans-macos
+        run: mv dist/ITrans dist/ITrans-macos
 
       - uses: actions/upload-artifact@v4
         with:
-          name: TTrans-macos
-          path: dist/TTrans-macos
+          name: ITrans-macos
+          path: dist/ITrans-macos
 
   # Windows 构建
   build-windows:
@@ -99,15 +99,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build with PyInstaller
-        run: pyinstaller TTrans.spec
+        run: pyinstaller ITrans.spec
 
       - name: Rename binary
-        run: mv dist/TTrans.exe dist/TTrans-windows.exe
+        run: mv dist/ITrans.exe dist/ITrans-windows.exe
 
       - uses: actions/upload-artifact@v4
         with:
-          name: TTrans-windows
-          path: dist/TTrans-windows.exe
+          name: ITrans-windows
+          path: dist/ITrans-windows.exe
 
   # 发布到 GitHub Releases
   release:
@@ -120,11 +120,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            TTrans-linux/TTrans-linux
-            TTrans-macos/TTrans-macos
-            TTrans-windows/TTrans-windows.exe
+            ITrans-linux/ITrans-linux
+            ITrans-macos/ITrans-macos
+            ITrans-windows/ITrans-windows.exe
           body: |
-            ## TTrans ${{ github.ref_name }}
+            ## ITrans ${{ github.ref_name }}
 
             终端翻译工具，支持 Google Translate 和 MyMemory 双引擎。
 
@@ -132,27 +132,27 @@ jobs:
 
             | 平台 | 文件 |
             |------|------|
-            | Linux | `TTrans-linux` |
-            | macOS | `TTrans-macos` |
-            | Windows | `TTrans-windows.exe` |
+            | Linux | `ITrans-linux` |
+            | macOS | `ITrans-macos` |
+            | Windows | `ITrans-windows.exe` |
 
             ### 使用
 
             ```bash
             # Linux/macOS
-            chmod +x TTrans-*
-            ./TTrans-linux              # 启动 TUI
-            ./TTrans-linux Hello World  # 简洁模式
+            chmod +x ITrans-*
+            ./ITrans-linux              # 启动 TUI
+            ./ITrans-linux Hello World  # 简洁模式
 
             # Windows
-            TTrans-windows.exe          # 启动 TUI
-            TTrans-windows.exe Hello    # 简洁模式
+            ITrans-windows.exe          # 启动 TUI
+            ITrans-windows.exe Hello    # 简洁模式
             ```
 
             ### pip 安装
 
             ```bash
-            pip install TTrans
-            ttrans              # 启动 TUI
-            ttrans Hello World  # 简洁模式
+            pip install ITrans
+            itrans              # 启动 TUI
+            itrans Hello World  # 简洁模式
             ```

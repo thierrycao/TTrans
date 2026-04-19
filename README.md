@@ -1,15 +1,15 @@
 <div align="center">
 
-# TTrans
+# ITrans
 
 **终端翻译，就该这么用**
 
 Enter 一敲，翻译就到。不换行，不卡顿，不占屏。
 
-[![PyPI](https://img.shields.io/pypi/v/TTrans?color=blue)](https://pypi.org/project/TTrans/)
-[![Python](https://img.shields.io/pypi/pyversions/TTrans?color=green)](https://pypi.org/project/TTrans/)
+[![PyPI](https://img.shields.io/pypi/v/ITrans?color=blue)](https://pypi.org/project/ITrans/)
+[![Python](https://img.shields.io/pypi/pyversions/ITrans?color=green)](https://pypi.org/project/ITrans/)
 [![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
-[![Downloads](https://img.shields.io/pypi/dm/TTrans?color=purple)](https://pypi.org/project/TTrans/)
+[![Downloads](https://img.shields.io/pypi/dm/ITrans?color=purple)](https://pypi.org/project/ITrans/)
 
 </div>
 
@@ -22,7 +22,7 @@ Enter 一敲，翻译就到。不换行，不卡顿，不占屏。
 但它不是那种"输入→等待→输出"的玩意儿。
 
 ```bash
-$ ttrans Hello World
+$ itrans Hello World
 你好世界
 ```
 
@@ -48,7 +48,7 @@ $ ttrans Hello World
 
 ## 为什么用它？
 
-| 问题 | TTrans 的答案 |
+| 问题 | ITrans 的答案 |
 |------|---------------|
 | Enter 会换行？ | 重写了 TextArea，Enter = 翻译，不换行 |
 | 网络请求卡 UI？ | Worker 后台线程，主线程继续响应 |
@@ -63,29 +63,29 @@ $ ttrans Hello World
 ### pip（推荐）
 
 ```bash
-pip install TTrans
+pip install ITrans
 ```
 
 ### 二进制（无需 Python）
 
-从 [Releases](https://github.com/thierrycao/TTrans/releases) 下载：
+从 [Releases](https://github.com/thierrycao/ITrans/releases) 下载：
 
 | 平台 | 文件 |
 |------|------|
-| Linux | TTrans-linux |
-| macOS | TTrans-macos |
-| Windows | TTrans-windows.exe |
+| Linux | ITrans-linux |
+| macOS | ITrans-macos |
+| Windows | ITrans-windows.exe |
 
 ```bash
-chmod +x TTrans-macos
-./TTrans-macos
+chmod +x ITrans-macos
+./ITrans-macos
 ```
 
 ### 从源码
 
 ```bash
-git clone https://github.com/thierrycao/TTrans.git
-cd TTrans
+git clone https://github.com/thierrycao/ITrans.git
+cd ITrans
 pip install -e .
 ```
 
@@ -98,7 +98,7 @@ pip install -e .
 直接运行，启动浮窗：
 
 ```bash
-ttrans
+itrans
 ```
 
 **快捷键**：
@@ -115,16 +115,16 @@ ttrans
 适合脚本调用、管道操作：
 
 ```bash
-ttrans Hello World
+itrans Hello World
 # -> 你好世界
 
-ttrans 你好世界
+itrans 你好世界
 # -> Hello World（自动检测中文，翻译成英文）
 
-ttrans --to ja Hello
+itrans --to ja Hello
 # -> 
 
-ttrans --list
+itrans --list
 # -> 列出所有语言
 ```
 
@@ -240,7 +240,7 @@ def detect_language(text):
 ## 项目结构
 
 ```
-src/ttrans/
+src/itrans/
 ├── main.py           # CLI 入口，参数解析
 ├── translator/
 │   └── engine.py     # 翻译引擎 + 词典 + 语言检测
@@ -273,7 +273,7 @@ MIT。随便用，随便改，随便发。
 
 <div align="center">
 
-**有问题？[开个 Issue](https://github.com/thierrycao/TTrans/issues)**
+**有问题？[开个 Issue](https://github.com/thierrycao/ITrans/issues)**
 
 **想贡献？[看 CONTRIBUTING.md](CONTRIBUTING.md)**
 

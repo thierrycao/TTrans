@@ -5,7 +5,7 @@
 
 set -e
 
-echo "=== TTrans 二进制打包 ==="
+echo "=== ITrans 二进制打包 ==="
 
 # 进入项目根目录
 cd "$(dirname "$0")/.."
@@ -36,24 +36,24 @@ pip install -r requirements.txt
 
 # 构建
 echo "PyInstaller 构建..."
-pyinstaller TTrans.spec --noconfirm
+pyinstaller ITrans.spec --noconfirm
 
 # 重命名输出文件
 case "$PLATFORM" in
     linux)
-        mv dist/TTrans dist/TTrans-linux
-        OUTPUT="dist/TTrans-linux"
+        mv dist/ITrans dist/ITrans-linux
+        OUTPUT="dist/ITrans-linux"
         ;;
     macos)
-        mv dist/TTrans dist/TTrans-macos
-        OUTPUT="dist/TTrans-macos"
+        mv dist/ITrans dist/ITrans-macos
+        OUTPUT="dist/ITrans-macos"
         ;;
     windows)
-        if [ -f "dist/TTrans.exe" ]; then
-            mv dist/TTrans.exe dist/TTrans-windows.exe
-            OUTPUT="dist/TTrans-windows.exe"
+        if [ -f "dist/ITrans.exe" ]; then
+            mv dist/ITrans.exe dist/ITrans-windows.exe
+            OUTPUT="dist/ITrans-windows.exe"
         else
-            OUTPUT="dist/TTrans.exe"
+            OUTPUT="dist/ITrans.exe"
         fi
         ;;
 esac

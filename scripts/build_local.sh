@@ -4,7 +4,7 @@
 
 set -e
 
-echo "=== TTrans 本地打包 ==="
+echo "=== ITrans 本地打包 ==="
 
 # 进入项目根目录
 cd "$(dirname "$0")/.."

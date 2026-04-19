@@ -55,8 +55,8 @@ python -m build
 
 # 检查结果
 ls dist/
-# -> ttrans-1.0.0-py3-none-any.whl
-# -> ttrans-1.0.0.tar.gz
+# -> itrans-1.0.0-py3-none-any.whl
+# -> itrans-1.0.0.tar.gz
 ```
 
 ### Step 4：验证包
@@ -66,7 +66,7 @@ ls dist/
 twine check dist/*
 
 # 检查内容（可选）
-tar -tzf dist/ttrans-1.0.0.tar.gz
+tar -tzf dist/itrans-1.0.0.tar.gz
 ```
 
 ### Step 5：上传到 PyPI
@@ -84,21 +84,21 @@ twine upload dist/*
 **输出**：
 
 ```
-Uploading ttrans-1.0.0-py3-none-any.whl 100%
-Uploading ttrans-1.0.0.tar.gz 100%
+Uploading itrans-1.0.0-py3-none-any.whl 100%
+Uploading itrans-1.0.0.tar.gz 100%
 
 View at:
-https://pypi.org/project/TTrans/1.0.0/
+https://pypi.org/project/ITrans/1.0.0/
 ```
 
 ### Step 6：验证发布成功
 
 ```bash
 # 尝试安装
-pip install TTrans
+pip install ITrans
 
 # 或直接访问
-https://pypi.org/project/TTrans/
+https://pypi.org/project/ITrans/
 ```
 
 ---
@@ -108,7 +108,7 @@ https://pypi.org/project/TTrans/
 首次发布后，项目已存在于 PyPI。现在可以创建项目专属 Token：
 
 1. PyPI -> Account settings -> API tokens
-2. Scope 选择 **"Project: TTrans"** <- 现在能选了
+2. Scope 选择 **"Project: ITrans"** <- 现在能选了
 3. 创建 Token：`pypi-yyyy...`
 4. **删除首次的全局 Token**（安全最佳实践）
 
@@ -146,9 +146,9 @@ https://pypi.org/project/TTrans/
    - 登录 PyPI -> Account settings -> Publishing
    - 点击 "Add a new pending publisher"
    - 填写：
-     - PyPI Project Name：`TTrans`
+     - PyPI Project Name：`ITrans`
      - Owner：`thierrycao`（GitHub 用户名）
-     - Repository name：`TTrans`
+     - Repository name：`ITrans`
      - Workflow name：`release.yml`
      - Environment name：`pypi`（可选，但推荐）
    - 点击 "Add"
@@ -198,7 +198,7 @@ jobs:
 | 2. 创建全局 API Token（Scope: Entire account）              |
 | 3. 本地打包：python -m build                                |
 | 4. 本地上传：twine upload --username __token__              |
-| 5. 验证：pip install TTrans                                 |
+| 5. 验证：pip install ITrans                                 |
 | 6. 删除全局 Token，创建项目专属 Token                        |
 | 7. 设置 GitHub Secret: PYPI_TOKEN                           |
 +-------------------------------------------------------------+
@@ -214,7 +214,7 @@ jobs:
 |     |                                                       |
 | python -m build -> twine upload                              |
 |     |                                                       |
-| PyPI 更新：https://pypi.org/project/TTrans/                 |
+| PyPI 更新：https://pypi.org/project/ITrans/                 |
 +-------------------------------------------------------------+
 ```
 
@@ -237,7 +237,7 @@ jobs:
 
 **答**：
 - 检查 https://pypi.org/project/<name>/ 是否存在
-- 如果存在且不是你的，只能改名（如 `ttrans-cli`）
+- 如果存在且不是你的，只能改名（如 `itrans-cli`）
 - 如果是你的但丢失了权限，联系 PyPI support
 
 ### Q：上传失败：403 Forbidden？
@@ -258,14 +258,14 @@ jobs:
 
 ## 本项目实际流程
 
-### 首次发布 TTrans
+### 首次发布 ITrans
 
 ```bash
 # 1. 创建全局 Token
 # PyPI -> API tokens -> Scope: Entire account
 
 # 2. 本地打包
-cd ~/workshop/abc/project/edu/2.tools/2.ai/eftools/ttrans
+cd ~/workshop/abc/project/edu/2.tools/2.ai/eftools/itrans
 ./scripts/build_local.sh
 
 # 3. 上传
@@ -274,8 +274,8 @@ export TWINE_PASSWORD=pypi-xxx...
 twine upload dist/*
 
 # 4. 验证
-pip install TTrans
-ttrans Hello
+pip install ITrans
+itrans Hello
 # -> 你好
 
 # 5. 配置后续自动化
