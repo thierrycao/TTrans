@@ -29,17 +29,17 @@ $ ttrans Hello World
 太简单？那就启动浮窗：
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│ ┌──────────┬────────────────────┬────────────────────┐              │
-│ │ 输入框    │ 词典               │ 翻译               │              │
-│ │          │                    │                    │              │
-│ │ Hello    │ 📖 hello           │ 你好               │              │
-│ │          │ UK[həˈləʊ] US[...] │                    │              │
-│ │ 🔧有道   │ [int.] 喂，你好    │                    │              │
-│ │ ↑↓翻页   │ 💡Hello, how are   │                    │              │
-│ └──────────┴────────────────────┴────────────────────┘              │
-│ Enter 翻译 | Esc 关闭 | Tab 切换引擎                                 │
-└──────────────────────────────────────────────────────────────────────┘
++----------------------------------------------------------------------+
+| +----------+--------------------+--------------------+              |
+| | 输入框    | 词典               | 翻译               |              |
+| |          |                    |                    |              |
+| | Hello    | hello              | 你好               |              |
+| |          | UK[...] US[...]    |                    |              |
+| | 有道     | [int.] 喂，你好    |                    |              |
+| | 翻页     | 例: Hello, how are |                    |              |
+| +----------+--------------------+--------------------+              |
+| Enter 翻译 | Esc 关闭 | Tab 切换引擎                             |
++----------------------------------------------------------------------+
 ```
 
 **50字符宽，浮在终端上方**。不挡视线，不占全屏，看着舒服。
@@ -72,9 +72,9 @@ pip install TTrans
 
 | 平台 | 文件 |
 |------|------|
-| Linux | `TTrans-linux` |
-| macOS | `TTrans-macos` |
-| Windows | `TTrans-windows.exe` |
+| Linux | TTrans-linux |
+| macOS | TTrans-macos |
+| Windows | TTrans-windows.exe |
 
 ```bash
 chmod +x TTrans-macos
@@ -105,10 +105,10 @@ ttrans
 
 | 键 | 作用 |
 |----|------|
-| `Enter` | 翻译（关键创新点） |
-| `Esc` | 关闭 |
-| `Tab` | 切换引擎 |
-| `↑↓` | 滚动翻页 |
+| Enter | 翻译（关键创新点） |
+| Esc | 关闭 |
+| Tab | 切换引擎 |
+| 上/下 | 滚动翻页 |
 
 ### 命令行模式
 
@@ -116,16 +116,16 @@ ttrans
 
 ```bash
 ttrans Hello World
-# → 你好世界
+# -> 你好世界
 
 ttrans 你好世界
-# → Hello World（自动检测中文，翻译成英文）
+# -> Hello World（自动检测中文，翻译成英文）
 
 ttrans --to ja Hello
-# → こんにちは
+# -> 
 
 ttrans --list
-# → 列出所有语言
+# -> 列出所有语言
 ```
 
 ---
@@ -135,20 +135,20 @@ ttrans --list
 **输入英文单词**：
 
 ```
-hello → UK[həˈləʊ] US[həˈloʊ]
+hello -> UK[həˈləʊ] US[həˈloʊ]
        [int.] 喂，你好（用于问候）
-       💡 "Hello, how are you today?"
+       例: "Hello, how are you today?"
        [n.] 招呼，问候
 ```
 
 **输入中文单字**：
 
 ```
-好 → 拼音: hào/hǎo
-     [hǎo·形容词] 美；优点多的；��人满意的
-     💡 这孩子长得真好
-     [hào·动词] 喜爱；喜欢
-     💡 这个人好搬弄是非
+好 -> 拼音: hào/hǎo
+     [形容词] 美；优点多的；令人满意的
+     例: 这孩子长得真好
+     [动词] 喜爱；喜欢
+     例: 这个人好搬弄是非
 ```
 
 有道词典 `newhh` 字段，多音字、词性、例句都有。
@@ -159,11 +159,11 @@ hello → UK[həˈləʊ] US[həˈloʊ]
 
 | 引擎 | 特点 | 限制 |
 |------|------|------|
-| `youdao` | 默认，中文友好 | 无 |
-| `google` | 稳定可靠 | 无 |
-| `mymemory` | 欧洲服务 | 5000 字符/日 |
+| youdao | 默认，中文友好 | 无 |
+| google | 稳定可靠 | 无 |
+| mymemory | 欧洲服务 | 5000 字符/日 |
 
-切换引擎：`Tab` 键，或 `--engine google`
+切换引擎：Tab 键，或 `--engine google`
 
 ---
 
@@ -172,13 +172,13 @@ hello → UK[həˈləʊ] US[həˈloʊ]
 ### 异步处理流程
 
 ```
-用户输入 → Enter 键
-         → TranslateTextArea.on_key() 捕获
-         → post_message(TranslateRequest)
-         → run_worker(thread=True) 后台执行
-         → 有道 API → 网络延迟 300ms
-         → post_message(TranslateResult)
-         → 更新 UI
+用户输入 -> Enter 键
+         -> TranslateTextArea.on_key() 捕获
+         -> post_message(TranslateRequest)
+         -> run_worker(thread=True) 后台执行
+         -> 有道 API -> 网络延迟 300ms
+         -> post_message(TranslateResult)
+         -> 更新 UI
 ```
 
 主线程从未停止响应。你的键盘输入，它一直听着。
@@ -202,9 +202,9 @@ def detect_language(text):
 
 | 用途 | URL | 参数 |
 |------|-----|------|
-| 翻译 | `dict.youdao.com/suggest` | `q=text&le=eng|ch` |
-| 英��词典 | `dict.youdao.com/jsonapi` | `q=word&le=eng` |
-| 中文词典 | `dict.youdao.com/jsonapi` | `q=字&le=ch` |
+| 翻译 | dict.youdao.com/suggest | q=text&le=eng|ch |
+| 英文词典 | dict.youdao.com/jsonapi | q=word&le=eng |
+| 中文词典 | dict.youdao.com/jsonapi | q=字&le=ch |
 
 解析 JSON，提取 `ec`（英文）或 `newhh`（中文）字段。
 
@@ -222,7 +222,7 @@ def detect_language(text):
 ./scripts/build_binary.sh
 
 # 版本管理
-./scripts/version.sh bump patch  # 1.0.0 → 1.0.1
+./scripts/version.sh bump patch  # 1.0.0 -> 1.0.1
 
 # 一键发布（打包 + tag + GitHub 推送）
 ./scripts/release.sh 1.0.1
@@ -233,7 +233,7 @@ def detect_language(text):
 - 构建 Linux/macOS/Windows 二进制
 - 创建 GitHub Release
 
-**设置 PyPI Token**：`repo → Settings → Secrets → PYPI_TOKEN`
+**设置 PyPI Token**：`repo -> Settings -> Secrets -> PYPI_TOKEN`
 
 ---
 

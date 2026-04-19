@@ -62,14 +62,14 @@ TripleColumnScreen (Screen)
 **异步处理流程**：
 
 ```
-用户输入 → TranslateTextArea.on_key(Enter)
-         → post_message(TranslateRequest)
-         → TripleColumnScreen.on_translate_request
-         → run_worker(_worker_translate, thread=True)
-         → 网络请求（后台线程）
-         → post_message(TranslateResult)
-         → TripleColumnScreen.on_translate_result
-         → _show_results (更新 UI)
+用户输入 -> TranslateTextArea.on_key(Enter)
+         -> post_message(TranslateRequest)
+         -> TripleColumnScreen.on_translate_request
+         -> run_worker(_worker_translate, thread=True)
+         -> 网络请求（后台线程）
+         -> post_message(TranslateResult)
+         -> TripleColumnScreen.on_translate_result
+         -> _show_results (更新 UI)
 ```
 
 **为什么用 Worker？**
@@ -85,14 +85,14 @@ Textual 的 Worker API 可以：
 
 ```python
 def main(args=None):
-    # 无参�� → TUI 模式
-    # 有参数 → 简洁模式
+    # 无参数 -> TUI 模式
+    # 有参数 -> 简洁模式
 ```
 
 **参数处理优先级**：
-1. `--list` → 列出语言/引擎
-2. `text` 或 `--text-arg` → 简洁翻译
-3. 默认 → 启动 TUI
+1. `--list` -> 列出语言/引擎
+2. `text` 或 `--text-arg` -> 简洁翻译
+3. 默认 -> 启动 TUI
 
 ## 依赖关系
 
@@ -114,30 +114,30 @@ main.py
 
 ```
 输入 "Hello"
-  → detect_language("Hello") = 'en'
-  → smart_translate(text, target='zh-CN')
-  → translate(text, source='auto', target='zh-CN')
-  → _translate_youdao(text)
-  → https://dict.youdao.com/suggest?le=eng&doctype=json
-  → 解析 entries[0]['explain']
-  → "你好"
+  -> detect_language("Hello") = 'en'
+  -> smart_translate(text, target='zh-CN')
+  -> translate(text, source='auto', target='zh-CN')
+  -> _translate_youdao(text)
+  -> https://dict.youdao.com/suggest?le=eng&doctype=json
+  -> 解析 entries[0]['explain']
+  -> "你好"
 ```
 
 ### 词典流程（英文）
 
 ```
 输入 "hello"
-  → is_single_word("hello") = True
-  → lookup_dictionary("hello")
-  → detect_language("hello") = 'en'
-  → le = 'eng'
-  → https://dict.youdao.com/jsonapi?le=eng
-  → 解析 ec.word[0]:
-      → ukphone, usphone → phonetic
-      → trs[].tr[].l.i → definitions
-  → DictionaryResult(
+  -> is_single_word("hello") = True
+  -> lookup_dictionary("hello")
+  -> detect_language("hello") = 'en'
+  -> le = 'eng'
+  -> https://dict.youdao.com/jsonapi?le=eng
+  -> 解析 ec.word[0]:
+      -> ukphone, usphone -> phonetic
+      -> trs[].tr[].l.i -> definitions
+  -> DictionaryResult(
        phonetic="UK[həˈləʊ] US[həˈloʊ]",
-       definitions=[{"partOfSpeech": "int.", "definition": "喂��你好"}]
+       definitions=[{"partOfSpeech": "int.", "definition": "喂，你好"}]
      )
 ```
 
@@ -145,15 +145,15 @@ main.py
 
 ```
 输入 "好"
-  → is_single_word("好") = True
-  → lookup_dictionary("好")
-  → detect_language("好") = 'zh-CN'
-  → le = 'ch'
-  → https://dict.youdao.com/jsonapi?le=ch
-  → 解析 newhh.dataList:
-      → pinyin → phonetic
-      → sense[].def → definitions
-  → DictionaryResult(
+  -> is_single_word("好") = True
+  -> lookup_dictionary("好")
+  -> detect_language("好") = 'zh-CN'
+  -> le = 'ch'
+  -> https://dict.youdao.com/jsonapi?le=ch
+  -> 解析 newhh.dataList:
+      -> pinyin -> phonetic
+      -> sense[].def -> definitions
+  -> DictionaryResult(
        phonetic="拼音: hào/hǎo",
        definitions=[{"partOfSpeech": "hǎo·形容词", "definition": "美；优点多的"}]
      )
@@ -196,12 +196,12 @@ hiddenimports=[
 
 ```
 push tag 'v*'
-  → release.yml 触发
-  → build-pypi: python -m build → twine upload
-  → build-linux: pyinstaller → TTrans-linux
-  → build-macos: pyinstaller → TTrans-macos
-  → build-windows: pyinstaller → TTrans-windows.exe
-  → release: 创建 GitHub Release，上传所有文件
+  -> release.yml 触发
+  -> build-pypi: python -m build -> twine upload
+  -> build-linux: pyinstaller -> TTrans-linux
+  -> build-macos: pyinstaller -> TTrans-macos
+  -> build-windows: pyinstaller -> TTrans-windows.exe
+  -> release: 创建 GitHub Release，上传所有文件
 ```
 
 ## 性能考量

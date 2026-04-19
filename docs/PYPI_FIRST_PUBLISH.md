@@ -10,10 +10,10 @@
 
 | 方式 | 首次发布 | 后续发布 | 安全性 |
 |------|----------|----------|--------|
-| **API Token**（传统） | ✅ 可用 | ✅ 可用 | 中（Token 泄露风险） |
-| **Trusted Publishing**（OIDC） | ❌ 需先认领项目 | ✅ 最佳 | 高（无需 Token） |
+| API Token（传统） | 可用 | 可用 | 中（Token 泄露风险） |
+| Trusted Publishing（OIDC） | 需先认领项目 | 最佳 | 高（无需 Token） |
 
-**Trusted Publishing 原理**：PyPI 验证 GitHub OIDC token → 确认 repo 身份 → 允许发布。但前提是项目名称已存在且你拥有权限。
+**Trusted Publishing 原理**：PyPI 验证 GitHub OIDC token -> 确认 repo 身份 -> 允许发布。但前提是项目名称已存在且你拥有权限。
 
 ---
 
@@ -29,16 +29,16 @@
 
 **首次必须用全局 Token**：
 
-1. 登录 PyPI → Account settings → API tokens
+1. 登录 PyPI -> Account settings -> API tokens
 2. 点击 **"Add API token"**
-3. Scope 选择 **"Entire account (all projects)"** ← 关键！首次发布无法选择特定项目
+3. Scope 选择 **"Entire account (all projects)"** <- 关键！首次发布无法选择特定项目
 4. Token name：`first-publish`
 5. 点击 "Create token"
 6. **立即保存 Token**（格式：`pypi-xxxx...`），只显示一次
 
 ```
-⚠️ 这个 Token 权限很大（可发布你账号下所有项目）
-⚠️ 首次发布后建议删除，换成项目专属 Token
+注意：这个 Token 权限很大（可发布你账号下所有项目）
+注意：首次发布后建议删除，换成项目专属 Token
 ```
 
 ### Step 3：本地打包
@@ -55,8 +55,8 @@ python -m build
 
 # 检查结果
 ls dist/
-# → ttrans-1.0.0-py3-none-any.whl
-# → ttrans-1.0.0.tar.gz
+# -> ttrans-1.0.0-py3-none-any.whl
+# -> ttrans-1.0.0.tar.gz
 ```
 
 ### Step 4：验证包
@@ -107,8 +107,8 @@ https://pypi.org/project/TTrans/
 
 首次发布后，项目已存在于 PyPI。现在可以创建项目专属 Token：
 
-1. PyPI → Account settings → API tokens
-2. Scope 选择 **"Project: TTrans"** ← 现在能选了
+1. PyPI -> Account settings -> API tokens
+2. Scope 选择 **"Project: TTrans"** <- 现在能选了
 3. 创建 Token：`pypi-yyyy...`
 4. **删除首次的全局 Token**（安全最佳实践）
 
@@ -120,7 +120,7 @@ https://pypi.org/project/TTrans/
 
 **设置 GitHub Secret**：
 
-1. GitHub repo → Settings → Secrets and variables → Actions
+1. GitHub repo -> Settings -> Secrets and variables -> Actions
 2. 点击 "New repository secret"
 3. Name：`PYPI_TOKEN`
 4. Value：`pypi-yyyy...`（项目专属 Token）
@@ -138,14 +138,14 @@ https://pypi.org/project/TTrans/
 
 ### 方案二：Trusted Publishing（推荐）
 
-**原理**：GitHub → OIDC token → PyPI 验证 → 允许发布。无需存储 API Token。
+**原理**：GitHub -> OIDC token -> PyPI 验证 -> 允许发布。无需存储 API Token。
 
 **配置步骤**：
 
 1. **PyPI 设置**：
-   - 登录 PyPI → Account settings → Publishing
+   - 登录 PyPI -> Account settings -> Publishing
    - 点击 "Add a new pending publisher"
-   -填写：
+   - 填写：
      - PyPI Project Name：`TTrans`
      - Owner：`thierrycao`（GitHub 用户名）
      - Repository name：`TTrans`
@@ -154,7 +154,7 @@ https://pypi.org/project/TTrans/
    - 点击 "Add"
 
 2. **GitHub 设置**：
-   - GitHub repo → Settings → Environments
+   - GitHub repo -> Settings -> Environments
    - 创建 environment：`pypi`
    - （可选）添加 protection rules：Required reviewers
 
@@ -193,29 +193,29 @@ jobs:
 ### 首次发布（必须本地）
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ 1. PyPI 注册账号 + 2FA                                      │
-│ 2. 创建全局 API Token（Scope: Entire account）              │
-│ 3. 本地打包：python -m build                                │
-│ 4. 本地上传：twine upload --username __token__              │
-│ 5. 验证：pip install TTrans                                 │
-│ 6. 删除全局 Token，创建项目专属 Token                        │
-│ 7. 设置 GitHub Secret: PYPI_TOKEN                           │
-���─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+| 1. PyPI 注册账号 + 2FA                                      |
+| 2. 创建全局 API Token（Scope: Entire account）              |
+| 3. 本地打包：python -m build                                |
+| 4. 本地上传：twine upload --username __token__              |
+| 5. 验证：pip install TTrans                                 |
+| 6. 删除全局 Token，创建项目专属 Token                        |
+| 7. 设置 GitHub Secret: PYPI_TOKEN                           |
++-------------------------------------------------------------+
 ```
 
 ### 后续发布（CI/CD 自动）
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ git push → tag v1.0.1                                       │
-│     ↓                                                       │
-│ GitHub Actions 触发                                         │
-│     ↓                                                       │
-│ python -m build → twine upload                              │
-│     ↓                                                       │
-│ PyPI 更新：https://pypi.org/project/TTrans/                 │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+| git push -> tag v1.0.1                                       |
+|     |                                                       |
+| GitHub Actions 触发                                         |
+|     |                                                       |
+| python -m build -> twine upload                              |
+|     |                                                       |
+| PyPI 更新：https://pypi.org/project/TTrans/                 |
++-------------------------------------------------------------+
 ```
 
 ---
@@ -224,9 +224,9 @@ jobs:
 
 ### Q：为什么首次无法用 Trusted Publishing？
 
-**答**：PyPI 的 Trusted Publishing 要求项目名称已存在。首次发布时项目不存在 → 无法设置 publisher → 必须先本地上传一次 → 项目创建后才能配置 OIDC。
+**答**：PyPI 的 Trusted Publishing 要求项目名称已存在。首次发布时项目不存在 -> 无法设置 publisher -> 必须先本地上传一次 -> 项目创建后才能配置 OIDC。
 
-### Q：全局 Token ��全吗？
+### Q：全局 Token 安全吗？
 
 **答**：不安全。权限是"所有项目"。做法：
 - 首次发布后立即删除
@@ -262,7 +262,7 @@ jobs:
 
 ```bash
 # 1. 创建全局 Token
-# PyPI → API tokens → Scope: Entire account
+# PyPI -> API tokens -> Scope: Entire account
 
 # 2. 本地打包
 cd ~/workshop/abc/project/edu/2.tools/2.ai/eftools/ttrans
@@ -276,10 +276,10 @@ twine upload dist/*
 # 4. 验证
 pip install TTrans
 ttrans Hello
-# → 你好
+# -> 你好
 
 # 5. 配置后续自动化
-# PyPI → Publishing → Add pending publisher (GitHub OIDC)
+# PyPI -> Publishing -> Add pending publisher (GitHub OIDC)
 # 或 GitHub Secret: PYPI_TOKEN
 ```
 
@@ -292,7 +292,7 @@ ttrans Hello
 # 方式二：GitHub 自动
 git tag v1.0.1
 git push origin v1.0.1
-# → Actions 自动发布到 PyPI
+# -> Actions 自动发布到 PyPI
 ```
 
 ---
