@@ -27,6 +27,7 @@ wheels/
 # PyInstaller
 *.manifest
 *.spec
+!iamtrans.spec
 build/
 dist/
 
