@@ -27,7 +27,7 @@ set_version() {
     fi
 
     # 更新 pyproject.toml
-    sed -i.bak "s/version = \"[0-9]+\.[0-9]+\.[0-9]+\"/version = \"$NEW_VERSION\"/" pyproject.toml
+    sed -i.bak -E "s/version = \"[0-9]+\.[0-9]+\.[0-9]+\"/version = \"$NEW_VERSION\"/" pyproject.toml
     rm -f pyproject.toml.bak
 
     # 更新 CHANGELOG.md
